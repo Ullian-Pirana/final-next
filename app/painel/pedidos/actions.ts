@@ -1,6 +1,6 @@
 'use server'
 
-import prisma from '@delivery/db'
+import prisma from "@/lib/prisma-client"
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
@@ -16,7 +16,7 @@ export async function criarPedido(formData: FormData) {
   const data = { ...Object.fromEntries(formData), produtos }
   const result = pedidoSchema.safeParse(data)
 
-  if (!result.success) return { error: result.error.errors[0].message }
+  if (!result.success) return { error: result.error.message }
 
   try {
     await prisma.pedidos.create({
@@ -41,7 +41,7 @@ export async function editarPedido(id: string, formData: FormData) {
   const data = { ...Object.fromEntries(formData), produtos }
   const result = pedidoSchema.safeParse(data)
 
-  if (!result.success) return { error: result.error.errors[0].message }
+  if (!result.success) return { error: result.error.message }
 
   try {
     await prisma.pedidos.update({

@@ -1,8 +1,8 @@
 'use client'
 
 import { ColumnDef } from "@tanstack/react-table"
-import EditPedido from "./_components/edit-pedido"
-import DeletePedido from "./_components/delete-pedido"
+import EditPedido from "./_components/edit_pedido"
+import DeletePedido from "./_components/delete_pedido"
 
 export const columns: ColumnDef<any>[] = [
   { accessorKey: "nome", header: "Cliente" },
