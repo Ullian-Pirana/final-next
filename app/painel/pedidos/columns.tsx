@@ -11,7 +11,10 @@ export const columns: ColumnDef<any>[] = [
   {
     id: "produtos",
     header: "Produtos",
-    cell: ({ row }) => row.original.produtos.map((p: any) => p.nome).join(", "),
+    cell: ({ row }) =>
+      row.original.produtos
+        .map((p: any) => `${p.nome} (R$ ${p.preco.toFixed(2)})`)
+        .join(", "),
   },
   {
     id: "acoes",
