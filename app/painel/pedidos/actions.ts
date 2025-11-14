@@ -12,7 +12,10 @@ const pedidoSchema = z.object({
 })
 
 export async function criarPedido(formData: FormData) {
-  const produtos = formData.getAll('produtos') as string[]
+  // RECEBE "id1,id2,id3"
+  const produtosString = formData.get("produtos") as string
+  const produtos = produtosString.split(",")
+
   const data = { ...Object.fromEntries(formData), produtos }
   const result = pedidoSchema.safeParse(data)
 
@@ -25,7 +28,9 @@ export async function criarPedido(formData: FormData) {
         endereco: result.data.endereco,
         telefone: result.data.telefone,
         produtos: {
-          connect: result.data.produtos.map((id) => ({ id })),
+          create: result.data.produtos.map((produtoId) => ({
+            produto: { connect: { id: produtoId } }
+          })),
         },
       },
     })
@@ -37,7 +42,9 @@ export async function criarPedido(formData: FormData) {
 }
 
 export async function editarPedido(id: string, formData: FormData) {
-  const produtos = formData.getAll('produtos') as string[]
+  const produtosString = formData.get("produtos") as string
+  const produtos = produtosString.split(",")
+
   const data = { ...Object.fromEntries(formData), produtos }
   const result = pedidoSchema.safeParse(data)
 
@@ -51,8 +58,10 @@ export async function editarPedido(id: string, formData: FormData) {
         endereco: result.data.endereco,
         telefone: result.data.telefone,
         produtos: {
-          set: [],
-          connect: result.data.produtos.map((id) => ({ id })),
+          deleteMany: {}, // apaga todos os vínculos antigos
+          create: result.data.produtos.map((produtoId) => ({
+            produto: { connect: { id: produtoId } }
+          })),
         },
       },
     })
