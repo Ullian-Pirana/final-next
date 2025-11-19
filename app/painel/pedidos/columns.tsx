@@ -13,7 +13,7 @@ export const columns: ColumnDef<any>[] = [
     header: "Produtos",
     cell: ({ row }) =>
       row.original.produtos
-        .map((p: any) => `${p.nome} (R$ ${p.preco.toFixed(2)})`)
+        .map((p: any) => `${p.produto.nome} (R$ ${p.produto.preco.toFixed(2)})`)
         .join(", "),
   },
   {
