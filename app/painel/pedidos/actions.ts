@@ -4,7 +4,6 @@ import prisma from "@/lib/prisma-client"
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
-// VALIDAÇÃO DO FORMULÁRIO
 const pedidoSchema = z.object({
   nome: z.string().min(2, 'Nome obrigatório'),
   endereco: z.string().min(3, 'Endereço inválido'),
@@ -21,7 +20,6 @@ export async function criarPedido(formData: FormData) {
   const data = { ...Object.fromEntries(formData), produtos }
   const result = pedidoSchema.safeParse(data)
 
-  // ❌ Caso endereço OU número sejam inválidos → retorna erro para exibir no pop-up
   if (!result.success) {
     return { error: result.error.issues[0].message }
   }
