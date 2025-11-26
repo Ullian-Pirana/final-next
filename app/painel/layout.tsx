@@ -5,6 +5,7 @@ import {
   SidebarTrigger
 } from "@/components/ui/sidebar"
 import UserMenu from "@/components/user-menu"
+import { Toaster } from "@/components/ui/sonner"
 
 export default async function PainelLayout({
   children
@@ -19,6 +20,10 @@ export default async function PainelLayout({
           <SidebarTrigger />
           <UserMenu />
         </header>
+
+        {/* Monta o Toaster para que os toasts funcionem */}
+        <Toaster position="top-right" />  
+
         <main className="flex-1 overflow-auto p-6">
           {children}
         </main>
